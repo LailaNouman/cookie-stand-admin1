@@ -1,26 +1,29 @@
+import axios from 'axios';
+
+const url = 'https://cookiestandapi.herokuapp.com/api/v1/cookie_stands/'
+
 export default function CreateForm(props) {
     function handleUserInput(e) {
         e.preventDefault();
-        var array = props.column
+
         const inputObject = {
             "location": e.target.location.value,
-            "minCustomers": e.target.min_cux.value,
-            "maxCustomers": e.target.max_cux.value,
-            "avgCookies": e.target.avg_c.value,
+            "minimum_customers_per_hour": e.target.min_cph.value,
+            "maximum_customers_per_hour": e.target.max_cph.value,
+            "average_cookies_per_sale": e.target.avg_cps.value,
             "hourly_sales": [48, 42, 30, 24, 42, 24, 36, 42, 42, 48, 36, 42, 24, 36],
+            "owner": 1
         }
-        if (props.userInput) {
-            props.setUserInput([...props.userInput, inputObject])
-            var x = array.map((item, x1) => item += inputObject.hourly_sales[x1])
-            props.setcolumn(x)
-        }
-        else {
-            props.setUserInput([inputObject])
-            array = inputObject.hourly_sales
-            props.setcolumn(inputObject.hourly_sales)
-        }
-      }
 
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${props.tokens.access}`
+            }
+        }
+
+        axios.post(url, inputObject, config).then(res => props.setUserInput([...props.userInput, res.data]))
+
+      }
     return (
       <form onSubmit={handleUserInput} className='mx-auto'>
         <div className='flex my-2 mb-4 pt-4'>
