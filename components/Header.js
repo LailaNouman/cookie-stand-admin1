@@ -4,7 +4,15 @@ export default function Header(props) {
             <h1 className=" text-2xl font-semibold">
                 Cookie Stand Admin
             </h1>
-            <button className="float-right text-black bg-white rounded w-20">Overview</button>
+            <div className="mr-80 h-7 rounded">
+                <button className="float-right text-black bg-white rounded w-20">Overview</button>
+                <button className="float-right text-black mr-5 font-bold bg-green-700 rounded w-20 h-full hover:bg-green-500">
+                    Sign Out
+                </button>
+                <div className="float-right text-black mr-5 font-bold bg-white rounded w-20 h-full text-center">
+                    {props.username}
+                </div>
+            </div>
         </header>
     )
 }
